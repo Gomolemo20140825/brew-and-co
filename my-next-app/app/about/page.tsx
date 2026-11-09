@@ -4,7 +4,7 @@ import Image from "next/image";
 export const metadata: Metadata = {
   title: "Our Story — Brew & Co",
   description:
-    "Marcus and Nadia Rivera opened Brew & Co on Bedford Avenue in 2019 — a coffee shop built on direct sourcing, scratch cooking, and the conviction that every neighbourhood deserves a room like this.",
+    "Motlatsi and Itumeleng Kgongwane opened Brew & Co on Bedford Avenue in 2019 — a coffee shop built on direct sourcing, scratch cooking, and the conviction that every neighbourhood deserves a room like this.",
 };
 
 const PHILOSOPHY = [
@@ -94,7 +94,7 @@ export default function AboutPage() {
                 lineHeight: 1.1,
               }}
             >
-              Marcus &amp; Nadia Rivera
+              Motlatsi &amp; Itumeleng Kgongwane
             </h2>
             <div
               style={{
@@ -109,7 +109,7 @@ export default function AboutPage() {
               }}
             >
               <p>
-                Marcus grew up in Puerto Rico and moved to New York in his early
+                Motlatsi grew up in Johannesburg and moved to New York in his early
                 twenties. He spent six years at a specialty roastery in Cobble
                 Hill learning every step of the coffee supply chain — from
                 green-bean sourcing to extraction. He still roasts every batch
@@ -117,7 +117,7 @@ export default function AboutPage() {
                 Colombia, and Guatemala.
               </p>
               <p>
-                Nadia grew up in Queens, studied hospitality at NYU, and spent
+                Itumeleng grew up in Soweto, studied hospitality at NYU, and spent
                 her twenties running front-of-house at some of Brooklyn&apos;s
                 best-loved restaurants. She runs the kitchen and writes the
                 menu. She is also responsible for the almond croissant.
@@ -150,8 +150,8 @@ export default function AboutPage() {
               }}
             >
               <Image
-                src="/about-barista-1.webp"
-                alt="Marcus Rivera, co-founder"
+                src="/about-motlatsi.webp"
+                alt="Motlatsi Kgongwane, co-founder"
                 fill
                 sizes="(min-width: 768px) 25vw, 50vw"
                 style={{ objectFit: "cover" }}
@@ -167,8 +167,8 @@ export default function AboutPage() {
               }}
             >
               <Image
-                src="/about-barista-2.webp"
-                alt="Nadia Rivera, co-founder"
+                src="/about-itumeleng.webp"
+                alt="Itumeleng Kgongwane, co-founder"
                 fill
                 sizes="(min-width: 768px) 25vw, 50vw"
                 style={{ objectFit: "cover" }}
@@ -219,7 +219,7 @@ export default function AboutPage() {
                 marginTop: "1rem",
               }}
             >
-              — Marcus Rivera
+              — Motlatsi Kgongwane
             </footer>
           </blockquote>
         </div>
