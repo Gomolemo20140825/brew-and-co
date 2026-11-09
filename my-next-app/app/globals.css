@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@import "../docs/design/tokens.css";
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-bg: #150B05;
+    --color-bg-alt: #2A1810;
+    --color-fg: var(--color-parchment);
+    --color-fg-muted: var(--color-ash);
+    --color-brand: var(--color-caramel);
+    --color-accent: var(--color-caramel);
+    --color-accent-lt: var(--color-amber);
+    --color-border: #3D2318;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #150B05;
+  --color-bg-alt: #2A1810;
+  --color-fg: var(--color-parchment);
+  --color-fg-muted: var(--color-ash);
+  --color-brand: var(--color-caramel);
+  --color-accent: var(--color-caramel);
+  --color-accent-lt: var(--color-amber);
+  --color-border: #3D2318;
+  color-scheme: dark;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

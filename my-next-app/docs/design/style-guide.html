@@ -1,0 +1,1085 @@
+<title>Brew & Co Design System</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap">
+
+<style>
+/*
+  Brew & Co Design System — Style Guide
+  Layout: left-aligned editorial grid, full-width dark hero
+  Display: Cormorant Garamond (heritage editorial serif)
+  Body/UI: DM Sans (clean, screen-optimized contemporary sans)
+*/
+
+/* ── Design Tokens ─────────────────────────────────── */
+:root {
+  /* Palette */
+  --roast:      #1A0E08;
+  --bark:       #3D1E0D;
+  --mahogany:   #5C2E18;
+  --amber:      #A0613A;
+  --caramel:    #D4A97A;
+  --ash:        #9A8070;
+  --mist:       #C8BCB0;
+  --parchment:  #EDE5D8;
+  --steam:      #F6F2EC;
+
+  /* Semantic — light */
+  --bg:         var(--steam);
+  --bg-alt:     var(--parchment);
+  --fg:         var(--roast);
+  --fg-muted:   var(--ash);
+  --brand:      var(--mahogany);
+  --accent:     var(--amber);
+  --accent-lt:  var(--caramel);
+  --border:     var(--mist);
+
+  /* Type */
+  --font-display: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans:    "DM Sans", system-ui, -apple-system, sans-serif;
+
+  /* Scale */
+  --t11: 0.6875rem;
+  --t13: 0.8125rem;
+  --t16: 1rem;
+  --t18: 1.125rem;
+  --t22: 1.375rem;
+  --t28: 1.75rem;
+  --t36: 2.25rem;
+  --t48: 3rem;
+  --t68: 4.25rem;
+  --t96: 6rem;
+
+  /* Spacing */
+  --s1: 0.25rem;  --s2: 0.5rem;   --s3: 0.75rem;
+  --s4: 1rem;     --s5: 1.25rem;  --s6: 1.5rem;
+  --s8: 2rem;     --s10: 2.5rem;  --s12: 3rem;
+  --s16: 4rem;    --s20: 5rem;    --s24: 6rem;
+
+  --r-sm: 2px;
+  --r-md: 4px;
+  --r-pill: 9999px;
+
+  color-scheme: light;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:        #150B05;
+    --bg-alt:    #2A1810;
+    --fg:        var(--parchment);
+    --fg-muted:  var(--ash);
+    --brand:     var(--caramel);
+    --accent:    var(--caramel);
+    --accent-lt: var(--amber);
+    --border:    #3D2318;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:        #150B05;
+  --bg-alt:    #2A1810;
+  --fg:        var(--parchment);
+  --fg-muted:  var(--ash);
+  --brand:     var(--caramel);
+  --accent:    var(--caramel);
+  --accent-lt: var(--amber);
+  --border:    #3D2318;
+  color-scheme: dark;
+}
+
+/* ── Base ────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-size: var(--t16);
+  line-height: 1.65;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ──────────────────────────────────────────── */
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: max(var(--s8), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--s8), env(safe-area-inset-right, 0px));
+}
+
+.section {
+  padding-block: var(--s16);
+}
+
+.section-alt { background: var(--bg-alt); }
+
+/* ── Checker motif ───────────────────────────────────── */
+.checker {
+  height: 10px;
+  background-image: conic-gradient(
+    var(--mahogany) 90deg,
+    var(--parchment) 90deg 180deg,
+    var(--mahogany) 180deg 270deg,
+    var(--parchment) 270deg
+  );
+  background-size: 10px 10px;
+  flex-shrink: 0;
+}
+
+/* ── Navigation ──────────────────────────────────────── */
+.nav {
+  background: var(--bark);
+  border-bottom: 1px solid rgba(93, 46, 24, 0.4);
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 100;
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--s6);
+  height: 56px;
+  padding-left: max(var(--s8), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--s8), env(safe-area-inset-right, 0px));
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: var(--t18);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--parchment);
+  margin-right: auto;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.nav-link {
+  font-family: var(--font-sans);
+  font-size: var(--t11);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ash);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+.nav-link:hover { color: var(--caramel); }
+.nav-link:focus-visible {
+  outline: 2px solid var(--caramel);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+/* ── Hero ────────────────────────────────────────────── */
+.hero {
+  background: var(--bark);
+  overflow: hidden;
+  position: relative;
+}
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  padding-left: max(var(--s8), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--s8), env(safe-area-inset-right, 0px));
+  padding-block: var(--s12) var(--s10);
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.hero-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--t11);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin: 0 0 var(--s8);
+}
+.hero-wordmark {
+  font-family: var(--font-display);
+  font-size: clamp(5rem, 14vw, 9.5rem);
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+  color: var(--parchment);
+  margin: 0 0 var(--s6);
+}
+.hero-wordmark em {
+  font-style: italic;
+  color: var(--caramel);
+}
+.hero-desc {
+  font-family: var(--font-sans);
+  font-size: var(--t13);
+  line-height: 1.6;
+  color: var(--ash);
+  max-width: 38ch;
+  margin: 0;
+}
+
+/* Oversized background ampersand */
+.hero-bg {
+  position: absolute;
+  bottom: -0.1em;
+  right: max(var(--s8), env(safe-area-inset-right, 0px));
+  font-family: var(--font-display);
+  font-size: clamp(10rem, 28vw, 22rem);
+  font-weight: 700;
+  color: var(--mahogany);
+  opacity: 0.45;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Section headers ─────────────────────────────────── */
+.sec-label {
+  font-family: var(--font-sans);
+  font-size: var(--t11);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 var(--s5);
+}
+
+.sec-title {
+  font-family: var(--font-display);
+  font-size: var(--t48);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  margin: 0 0 var(--s10);
+  text-wrap: balance;
+}
+
+/* ── Color swatches ──────────────────────────────────── */
+.palette {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: var(--s3);
+}
+.swatch {
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.swatch-block { height: 76px; }
+.swatch-info {
+  padding: var(--s3);
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.swatch-name {
+  font-family: var(--font-sans);
+  font-size: var(--t13);
+  font-weight: 500;
+  color: var(--fg);
+}
+.swatch-hex {
+  font-family: "Courier New", monospace;
+  font-size: 11px;
+  color: var(--fg-muted);
+}
+.swatch-role {
+  font-size: 10px;
+  color: var(--fg-muted);
+  font-family: var(--font-sans);
+  margin-top: 1px;
+}
+
+/* ── Type samples ────────────────────────────────────── */
+.type-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s10);
+  margin-bottom: var(--s12);
+}
+.type-face-label {
+  display: flex;
+  gap: var(--s2);
+  flex-wrap: wrap;
+  margin-bottom: var(--s3);
+}
+.type-tag {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  background: var(--bg-alt);
+  padding: 2px var(--s2);
+  border-radius: var(--r-sm);
+}
+
+.spec {
+  padding-block: var(--s6);
+  border-bottom: 1px solid var(--border);
+}
+.spec:last-child { border-bottom: none; }
+
+.spec-meta {
+  display: flex;
+  gap: var(--s2);
+  flex-wrap: wrap;
+  margin-bottom: var(--s3);
+}
+
+/* ── Buttons ─────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  font-family: var(--font-sans);
+  font-size: var(--t13);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  border: none;
+  border-radius: var(--r-md);
+  cursor: pointer;
+  padding: var(--s3) var(--s5);
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+.btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.btn-primary {
+  background: var(--mahogany);
+  color: var(--parchment);
+}
+.btn-primary:hover { background: var(--bark); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--mahogany);
+  border: 1.5px solid var(--mahogany);
+}
+.btn-secondary:hover { background: rgba(92,46,24,.08); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--fg);
+  padding-inline: var(--s2);
+}
+.btn-ghost:hover { color: var(--accent); }
+
+.btn-sm {
+  font-size: var(--t11);
+  padding: calc(var(--s1) + 2px) var(--s4);
+}
+.btn-lg {
+  font-size: var(--t16);
+  padding: var(--s4) var(--s8);
+  letter-spacing: 0.04em;
+}
+
+/* Buttons on dark */
+.on-dark .btn-primary {
+  background: var(--caramel);
+  color: var(--bark);
+}
+.on-dark .btn-primary:hover { background: var(--parchment); }
+.on-dark .btn-secondary {
+  color: var(--parchment);
+  border-color: var(--parchment);
+}
+.on-dark .btn-secondary:hover { background: rgba(237,229,216,.1); }
+.on-dark .btn-ghost { color: var(--caramel); }
+.on-dark .btn-ghost:hover { color: var(--parchment); }
+
+/* ── Badges ──────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 3px var(--s3);
+  border-radius: var(--r-pill);
+}
+.badge-origin  { background: var(--roast);     color: var(--caramel); }
+.badge-process { background: var(--mist);       color: var(--bark); }
+.badge-new     { background: var(--amber);      color: var(--parchment); }
+.badge-roast   { background: var(--parchment);  color: var(--mahogany); border: 1px solid var(--mist); }
+
+/* ── Inputs ──────────────────────────────────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s2);
+}
+.field-label {
+  font-family: var(--font-sans);
+  font-size: var(--t13);
+  font-weight: 500;
+  color: var(--fg);
+}
+.field-input {
+  font-family: var(--font-sans);
+  font-size: var(--t16);
+  color: var(--fg);
+  background: var(--bg);
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--s3) var(--s4);
+  outline: none;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+.field-input::placeholder { color: var(--fg-muted); }
+.field-input:focus { border-color: var(--accent); }
+
+.field-hint {
+  font-family: var(--font-sans);
+  font-size: var(--t11);
+  color: var(--fg-muted);
+}
+
+/* ── Product card ────────────────────────────────────── */
+.card {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.card-img {
+  aspect-ratio: 4/3;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: var(--t22);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ash);
+}
+.card-body {
+  padding: var(--s4) var(--s5);
+  flex: 1;
+}
+.card-badges { display: flex; gap: var(--s2); flex-wrap: wrap; margin-bottom: var(--s3); }
+.card-title {
+  font-family: var(--font-display);
+  font-size: var(--t22);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--fg);
+  margin: 0 0 var(--s1);
+}
+.card-notes {
+  font-family: var(--font-sans);
+  font-size: var(--t11);
+  color: var(--fg-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--s3) var(--s5) var(--s4);
+  border-top: 1px solid var(--border);
+}
+.card-price {
+  font-family: var(--font-display);
+  font-size: var(--t22);
+  font-weight: 400;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Pull quote ──────────────────────────────────────── */
+.pullquote {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--t28);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--fg);
+  border-left: 3px solid var(--accent);
+  padding-left: var(--s6);
+  margin: var(--s8) 0;
+  max-width: 50ch;
+}
+
+/* ── Spacing visual ──────────────────────────────────── */
+.space-row {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--s5);
+  flex-wrap: wrap;
+}
+.space-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--s2);
+}
+.space-block {
+  background: var(--accent);
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+/* ── Demo helpers ────────────────────────────────────── */
+.demo-row {
+  display: flex;
+  gap: var(--s4);
+  flex-wrap: wrap;
+  align-items: flex-start;
+  margin-bottom: var(--s6);
+}
+.on-dark {
+  background: var(--bark);
+  border-radius: var(--r-md);
+  padding: var(--s6);
+}
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--s5);
+  margin-bottom: var(--s10);
+}
+.form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s5);
+  max-width: 440px;
+  margin-bottom: var(--s10);
+}
+.comp-block {
+  margin-bottom: var(--s10);
+}
+.comp-heading {
+  font-family: var(--font-display);
+  font-size: var(--t28);
+  font-weight: 400;
+  color: var(--fg);
+  margin: 0 0 var(--s4);
+}
+
+/* ── Dark motif section ──────────────────────────────── */
+.motif-section {
+  background: var(--bark);
+  color: var(--parchment);
+}
+.motif-section .sec-label { color: var(--caramel); }
+.motif-section .sec-title { color: var(--parchment); }
+.motif-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--s6);
+}
+.motif-preview {
+  height: 120px;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  margin-bottom: var(--s3);
+}
+.motif-label {
+  font-family: var(--font-sans);
+  font-size: var(--t11);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin: 0 0 var(--s1);
+}
+.motif-desc {
+  font-family: var(--font-sans);
+  font-size: var(--t13);
+  color: var(--ash);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── Footer ──────────────────────────────────────────── */
+.footer {
+  background: var(--roast);
+  color: var(--parchment);
+}
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s4);
+  flex-wrap: wrap;
+  padding-block: var(--s8);
+  padding-left: max(var(--s8), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--s8), env(safe-area-inset-right, 0px));
+}
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: var(--t18);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--parchment);
+}
+.footer-meta {
+  font-family: var(--font-sans);
+  font-size: var(--t11);
+  color: var(--ash);
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media (max-width: 640px) {
+  .hero-bg       { display: none; }
+  .hero-wordmark { font-size: clamp(4rem, 18vw, 6rem); }
+  .sec-title     { font-size: var(--t36); }
+  .section       { padding-block: var(--s10); }
+  .type-row      { grid-template-columns: 1fr; gap: var(--s8); }
+  .wrap          {
+    padding-left: max(var(--s4), env(safe-area-inset-left, 0px));
+    padding-right: max(var(--s4), env(safe-area-inset-right, 0px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+  }
+}
+</style>
+
+<!-- ═══ Navigation ═══════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">Brew &amp; Co</a>
+    <a href="#colors" class="nav-link">Colors</a>
+    <a href="#typography" class="nav-link">Type</a>
+    <a href="#spacing" class="nav-link">Spacing</a>
+    <a href="#components" class="nav-link">Components</a>
+    <a href="#motifs" class="nav-link">Motifs</a>
+  </div>
+</nav>
+
+<!-- ═══ Hero ═════════════════════════════════════════════ -->
+<header class="hero" id="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Design System — v1.0</p>
+    <h1 class="hero-wordmark">Brew<br><em>&amp;</em> Co</h1>
+    <p class="hero-desc">Visual identity, design tokens, and component library for the Brew &amp; Co digital experience.</p>
+  </div>
+  <div class="hero-bg" aria-hidden="true">&amp;</div>
+</header>
+<div class="checker"></div>
+
+<!-- ═══ Colors ═══════════════════════════════════════════ -->
+<section class="section" id="colors">
+  <div class="wrap">
+    <p class="sec-label">01 — Foundation</p>
+    <h2 class="sec-title">Color</h2>
+
+    <div class="palette">
+      <div class="swatch">
+        <div class="swatch-block" style="background:#1A0E08;"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Roast</span>
+          <span class="swatch-hex">#1A0E08</span>
+          <span class="swatch-role">Body text, deep ink</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#3D1E0D;"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Bark</span>
+          <span class="swatch-hex">#3D1E0D</span>
+          <span class="swatch-role">Dark surfaces, nav</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#5C2E18;"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Mahogany</span>
+          <span class="swatch-hex">#5C2E18</span>
+          <span class="swatch-role">Brand primary</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#A0613A;"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Amber</span>
+          <span class="swatch-hex">#A0613A</span>
+          <span class="swatch-role">Accent, interactive</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#D4A97A;"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Caramel</span>
+          <span class="swatch-hex">#D4A97A</span>
+          <span class="swatch-role">Hover, highlight</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#9A8070;"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Ash</span>
+          <span class="swatch-hex">#9A8070</span>
+          <span class="swatch-role">Muted text</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#C8BCB0;"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Mist</span>
+          <span class="swatch-hex">#C8BCB0</span>
+          <span class="swatch-role">Borders, dividers</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#EDE5D8; border-bottom: 1px solid #C8BCB0;"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Parchment</span>
+          <span class="swatch-hex">#EDE5D8</span>
+          <span class="swatch-role">Light surfaces</span>
+        </div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-block" style="background:#F6F2EC; border-bottom: 1px solid #C8BCB0;"></div>
+        <div class="swatch-info">
+          <span class="swatch-name">Steam</span>
+          <span class="swatch-hex">#F6F2EC</span>
+          <span class="swatch-role">Page background</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Typography ═══════════════════════════════════════ -->
+<section class="section section-alt" id="typography">
+  <div class="wrap">
+    <p class="sec-label">02 — Expression</p>
+    <h2 class="sec-title">Typography</h2>
+
+    <div class="type-row">
+      <div>
+        <div class="type-face-label">
+          <span class="type-tag">Display</span>
+          <span class="type-tag">Cormorant Garamond</span>
+        </div>
+        <p style="font-family:var(--font-display);font-size:var(--t48);line-height:1.1;font-weight:400;margin:0 0 var(--s3);">Aa</p>
+        <p style="font-family:var(--font-sans);font-size:var(--t13);line-height:1.6;color:var(--fg-muted);margin:0;max-width:38ch;">High-contrast editorial serif. Thin hairlines at display size are the brand's visual signature. Use for headlines, wordmarks, and typographic moments.</p>
+      </div>
+      <div>
+        <div class="type-face-label">
+          <span class="type-tag">Body / UI</span>
+          <span class="type-tag">DM Sans</span>
+        </div>
+        <p style="font-family:var(--font-sans);font-size:var(--t48);line-height:1.1;font-weight:400;margin:0 0 var(--s3);">Aa</p>
+        <p style="font-family:var(--font-sans);font-size:var(--t13);line-height:1.6;color:var(--fg-muted);margin:0;max-width:38ch;">Clean, screen-optimized sans-serif. The deliberate contrast with Cormorant is part of the brand voice — heritage meets contemporary.</p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-meta">
+        <span class="type-tag">Display XL · 96px · Cormorant · 300</span>
+      </div>
+      <p style="font-family:var(--font-display);font-size:clamp(3.5rem,13vw,var(--t96));font-weight:300;line-height:1;letter-spacing:-0.03em;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">Single Origin</p>
+    </div>
+
+    <div class="spec">
+      <div class="spec-meta">
+        <span class="type-tag">Display · 68px · Cormorant · 400</span>
+      </div>
+      <p style="font-family:var(--font-display);font-size:clamp(2.5rem,10vw,var(--t68));font-weight:400;line-height:1.05;letter-spacing:-0.02em;margin:0;">From Farm to Cup</p>
+    </div>
+
+    <div class="spec">
+      <div class="spec-meta">
+        <span class="type-tag">Heading 1 · 48px · Cormorant · 400</span>
+      </div>
+      <p style="font-family:var(--font-display);font-size:clamp(2rem,8vw,var(--t48));font-weight:400;line-height:1.1;letter-spacing:-0.02em;margin:0;">Ethiopian Yirgacheffe</p>
+    </div>
+
+    <div class="spec">
+      <div class="spec-meta">
+        <span class="type-tag">Heading 2 · 36px · Cormorant · 400</span>
+      </div>
+      <p style="font-family:var(--font-display);font-size:var(--t36);font-weight:400;line-height:1.2;margin:0;">Our Seasonal Selection</p>
+    </div>
+
+    <div class="spec">
+      <div class="spec-meta">
+        <span class="type-tag">Heading 3 · 28px · Cormorant · 400</span>
+      </div>
+      <p style="font-family:var(--font-display);font-size:var(--t28);font-weight:400;line-height:1.3;margin:0;">Notes of citrus and dark chocolate</p>
+    </div>
+
+    <div class="spec">
+      <div class="spec-meta">
+        <span class="type-tag">Lead · 22px · DM Sans · 400</span>
+      </div>
+      <p style="font-family:var(--font-sans);font-size:var(--t22);font-weight:400;line-height:1.4;color:var(--fg-muted);margin:0;max-width:55ch;">We source directly from farming families across Ethiopia, Colombia, and Guatemala, bringing you the full story of every bean.</p>
+    </div>
+
+    <div class="spec">
+      <div class="spec-meta">
+        <span class="type-tag">Body · 16px · DM Sans · 400</span>
+      </div>
+      <p style="font-family:var(--font-sans);font-size:var(--t16);line-height:1.65;color:var(--fg);margin:0;max-width:65ch;">Our roasting process is calibrated to each coffee's character. Light roasts preserve the delicate floral notes of high-altitude washed Ethiopians; darker profiles develop the rich chocolatey body of low-altitude Brazilian naturals. Every bag carries a roast date — coffee is a fresh ingredient.</p>
+    </div>
+
+    <div class="spec">
+      <div class="spec-meta">
+        <span class="type-tag">Caption · 11px · DM Sans · 500 · uppercase</span>
+      </div>
+      <p style="font-family:var(--font-sans);font-size:var(--t11);font-weight:500;letter-spacing:0.09em;text-transform:uppercase;color:var(--fg-muted);margin:0;">Altitude 1,800–2,200m — Washed Process — Harvest Jan–Mar</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Spacing ═══════════════════════════════════════════ -->
+<section class="section" id="spacing">
+  <div class="wrap">
+    <p class="sec-label">03 — Structure</p>
+    <h2 class="sec-title">Spacing</h2>
+
+    <div class="space-row">
+      <div class="space-unit">
+        <div class="space-block" style="width:4px;height:4px;"></div>
+        <p style="font-size:10px;color:var(--fg-muted);margin:0;font-family:var(--font-sans);text-align:center;">s1<br>4px</p>
+      </div>
+      <div class="space-unit">
+        <div class="space-block" style="width:8px;height:8px;"></div>
+        <p style="font-size:10px;color:var(--fg-muted);margin:0;font-family:var(--font-sans);text-align:center;">s2<br>8px</p>
+      </div>
+      <div class="space-unit">
+        <div class="space-block" style="width:12px;height:12px;"></div>
+        <p style="font-size:10px;color:var(--fg-muted);margin:0;font-family:var(--font-sans);text-align:center;">s3<br>12px</p>
+      </div>
+      <div class="space-unit">
+        <div class="space-block" style="width:16px;height:16px;"></div>
+        <p style="font-size:10px;color:var(--fg-muted);margin:0;font-family:var(--font-sans);text-align:center;">s4<br>16px</p>
+      </div>
+      <div class="space-unit">
+        <div class="space-block" style="width:24px;height:24px;"></div>
+        <p style="font-size:10px;color:var(--fg-muted);margin:0;font-family:var(--font-sans);text-align:center;">s6<br>24px</p>
+      </div>
+      <div class="space-unit">
+        <div class="space-block" style="width:32px;height:32px;"></div>
+        <p style="font-size:10px;color:var(--fg-muted);margin:0;font-family:var(--font-sans);text-align:center;">s8<br>32px</p>
+      </div>
+      <div class="space-unit">
+        <div class="space-block" style="width:48px;height:48px;"></div>
+        <p style="font-size:10px;color:var(--fg-muted);margin:0;font-family:var(--font-sans);text-align:center;">s12<br>48px</p>
+      </div>
+      <div class="space-unit">
+        <div class="space-block" style="width:64px;height:64px;"></div>
+        <p style="font-size:10px;color:var(--fg-muted);margin:0;font-family:var(--font-sans);text-align:center;">s16<br>64px</p>
+      </div>
+      <div class="space-unit">
+        <div class="space-block" style="width:96px;height:96px;"></div>
+        <p style="font-size:10px;color:var(--fg-muted);margin:0;font-family:var(--font-sans);text-align:center;">s24<br>96px</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Components ════════════════════════════════════════ -->
+<section class="section section-alt" id="components">
+  <div class="wrap">
+    <p class="sec-label">04 — Components</p>
+    <h2 class="sec-title">Components</h2>
+
+    <!-- Buttons -->
+    <div class="comp-block">
+      <h3 class="comp-heading">Buttons</h3>
+      <div class="demo-row">
+        <button class="btn btn-primary">Order Now</button>
+        <button class="btn btn-secondary">Explore Coffees</button>
+        <button class="btn btn-ghost">Learn more →</button>
+      </div>
+      <div class="demo-row">
+        <button class="btn btn-primary btn-lg">Start Your Subscription</button>
+        <button class="btn btn-secondary btn-sm">View all</button>
+        <button class="btn btn-primary btn-sm" disabled style="opacity:0.4;cursor:not-allowed;">Sold out</button>
+      </div>
+      <div class="on-dark demo-row" style="margin-bottom:0;">
+        <button class="btn btn-primary on-dark-primary">Order Now</button>
+        <button class="btn btn-secondary" style="color:var(--parchment);border-color:var(--parchment);">Explore</button>
+        <button class="btn btn-ghost" style="color:var(--caramel);">Learn more →</button>
+      </div>
+    </div>
+
+    <!-- Badges -->
+    <div class="comp-block">
+      <h3 class="comp-heading">Badges</h3>
+      <div class="demo-row">
+        <span class="badge badge-origin">Ethiopia</span>
+        <span class="badge badge-origin">Colombia</span>
+        <span class="badge badge-origin">Guatemala</span>
+        <span class="badge badge-process">Washed</span>
+        <span class="badge badge-process">Natural</span>
+        <span class="badge badge-process">Honey</span>
+        <span class="badge badge-new">New Arrival</span>
+        <span class="badge badge-roast">Light Roast</span>
+        <span class="badge badge-roast">Medium Roast</span>
+        <span class="badge badge-roast">Dark Roast</span>
+      </div>
+    </div>
+
+    <!-- Product Cards -->
+    <div class="comp-block">
+      <h3 class="comp-heading">Product Cards</h3>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-img" style="background:linear-gradient(135deg,#D4A97A 0%,#A0613A 100%);">Yirgacheffe</div>
+          <div class="card-body">
+            <div class="card-badges">
+              <span class="badge badge-origin">Ethiopia</span>
+              <span class="badge badge-process">Washed</span>
+            </div>
+            <h4 class="card-title">Yirgacheffe Kochere</h4>
+            <p class="card-notes">Jasmine, blueberry, lemon zest<br>Altitude 1,900–2,200m</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-price">$22</span>
+            <button class="btn btn-primary btn-sm">Add to bag</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-img" style="background:linear-gradient(135deg,#9A8070 0%,#5C2E18 100%);">Huila</div>
+          <div class="card-body">
+            <div class="card-badges">
+              <span class="badge badge-origin">Colombia</span>
+              <span class="badge badge-new">New</span>
+            </div>
+            <h4 class="card-title">Huila Natural Lot 12</h4>
+            <p class="card-notes">Dark cherry, cocoa, brown sugar<br>Altitude 1,600–1,800m</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-price">$26</span>
+            <button class="btn btn-primary btn-sm">Add to bag</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-img" style="background:linear-gradient(135deg,#C8BCB0 0%,#9A8070 100%);">Acatenango</div>
+          <div class="card-body">
+            <div class="card-badges">
+              <span class="badge badge-origin">Guatemala</span>
+              <span class="badge badge-process">Honey</span>
+            </div>
+            <h4 class="card-title">Acatenango Honey</h4>
+            <p class="card-notes">Peach, caramel, milk chocolate<br>Altitude 1,700–1,900m</p>
+          </div>
+          <div class="card-footer">
+            <span class="card-price">$24</span>
+            <button class="btn btn-primary btn-sm">Add to bag</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forms -->
+    <div class="comp-block">
+      <h3 class="comp-heading">Form Inputs</h3>
+      <div class="form-stack">
+        <div class="field">
+          <label class="field-label" for="f-email">Email address</label>
+          <input class="field-input" type="email" id="f-email" placeholder="you@example.com">
+          <span class="field-hint">We'll send your roast schedule here.</span>
+        </div>
+        <div class="field">
+          <label class="field-label" for="f-grind">Grind preference</label>
+          <select class="field-input" id="f-grind">
+            <option value="">Select grind size</option>
+            <option>Whole Bean</option>
+            <option>Espresso</option>
+            <option>Pour Over</option>
+            <option>French Press</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="field-label" for="f-notes">Tasting notes (optional)</label>
+          <textarea class="field-input" id="f-notes" rows="3" placeholder="Tell us what flavors you enjoy…"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pull quote -->
+    <div class="comp-block">
+      <h3 class="comp-heading">Pull Quote</h3>
+      <blockquote class="pullquote">
+        "Every origin tells a different story. We just make sure the cup tells it faithfully."
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Motifs ════════════════════════════════════════════ -->
+<section class="section motif-section" id="motifs">
+  <div class="wrap">
+    <p class="sec-label">05 — Motifs</p>
+    <h2 class="sec-title">Graphic Elements</h2>
+
+    <div class="motif-grid">
+      <div>
+        <div class="motif-preview" style="background-image:conic-gradient(#5C2E18 90deg,#EDE5D8 90deg 180deg,#5C2E18 180deg 270deg,#EDE5D8 270deg);background-size:12px 12px;"></div>
+        <p class="motif-label">Checker — Light</p>
+        <p class="motif-desc">12×12px Mahogany + Parchment. Section dividers, packaging accent, narrow band between light and dark regions.</p>
+      </div>
+
+      <div>
+        <div class="motif-preview" style="background-image:conic-gradient(#D4A97A 90deg,#3D1E0D 90deg 180deg,#D4A97A 180deg 270deg,#3D1E0D 270deg);background-size:12px 12px;"></div>
+        <p class="motif-label">Checker — Dark</p>
+        <p class="motif-desc">Caramel + Bark variant for dark backgrounds and printed packaging.</p>
+      </div>
+
+      <div>
+        <div class="motif-preview" style="background:var(--mahogany);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+          <span style="font-family:var(--font-display);font-size:8rem;font-weight:700;color:var(--bark);opacity:0.5;position:absolute;line-height:1;user-select:none;">&amp;</span>
+          <span style="font-family:var(--font-display);font-size:var(--t28);font-weight:400;font-style:italic;color:var(--caramel);position:relative;z-index:1;">Brew &amp; Co</span>
+        </div>
+        <p class="motif-label">Ampersand Watermark</p>
+        <p class="motif-desc">The &amp; mark large in font-display at 700 weight, used as a background texture on dark surfaces. Referencing the Arabic calligraphy technique from the brand reference.</p>
+      </div>
+
+      <div>
+        <div class="motif-preview" style="background:var(--bark);display:flex;align-items:flex-end;justify-content:flex-start;padding:var(--s4);overflow:hidden;position:relative;">
+          <span style="font-family:var(--font-display);font-size:5rem;font-weight:300;font-style:italic;color:var(--caramel);position:absolute;bottom:-0.1em;right:0.1em;line-height:1;opacity:0.9;user-select:none;">Co.</span>
+          <span style="font-family:var(--font-sans);font-size:var(--t11);font-weight:500;letter-spacing:0.1em;text-transform:uppercase;color:var(--ash);position:relative;z-index:1;">Since 2024</span>
+        </div>
+        <p class="motif-label">Typographic Bleed</p>
+        <p class="motif-desc">Word fragments set in display italic bleed off the edge of a container to create editorial depth.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="checker" style="background-image:conic-gradient(#D4A97A 90deg,#3D1E0D 90deg 180deg,#D4A97A 180deg 270deg,#3D1E0D 270deg);background-size:10px 10px;"></div>
+
+<!-- ═══ Footer ════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span class="footer-logo">Brew &amp; Co</span>
+    <span class="footer-meta">Design System v1.0 — Cormorant Garamond + DM Sans — Tailwind v4</span>
+  </div>
+</footer>
